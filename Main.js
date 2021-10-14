@@ -8,9 +8,9 @@ function stopAnimation() {
 }
 
 function startAnimation() {
-  var position = widthOfEachSprite; //start position for the image
-  const speed = 200; //in millisecond(ms)
-  const diff = widthOfEachSprite; //difference between two sprites
+  var position = widthOfEachSprite;
+  const speed = 200;
+  const diff = widthOfEachSprite;
 
   animationInterval = setInterval(() => {
     spriteSheet.style.backgroundPosition = `-${position}px 0px`;
@@ -18,14 +18,11 @@ function startAnimation() {
     if (position < widthOfSpriteSheet) {
       position = position + diff;
     } else {
-      //increment the position by the width of each sprite each time
       position = widthOfEachSprite;
     }
-    //reset the position to show first sprite after the last one
   }, speed);
 }
 
-//Start animation
 startAnimation();
 
 function myFunction(x) {
@@ -33,4 +30,59 @@ function myFunction(x) {
 
   let menueBackground = document.getElementById('menuBackground');
   menueBackground.classList.toggle("hidden");
+
+  changeColorTheme();
+  console.log(colorChangersToBright = document.getElementsByClassName('dark'));
+}
+
+function changeColorTheme() {
+  let colorChangersToBright = document.getElementsByClassName('dark');
+  let colorChangersToDark = document.getElementsByClassName('bright');
+  console.log(colorChangersToBright.length);
+  if(0 !== colorChangersToBright.length) {
+    for (let i = 0; i < colorChangersToBright.length; i++) {
+      console.log(i);
+      colorChangersToBright[i].classList.replace('dark', 'bright');
+    }
+    colorChangersToBright = document.getElementsByClassName('dark');
+    for (let i = 0; i < colorChangersToBright.length; i++) {
+      console.log(i);
+      colorChangersToBright[i].classList.replace('dark', 'bright');
+    }
+    return;
+  }
+  
+  if(0 !== colorChangersToDark.length) {
+    for (let i = 0; i < colorChangersToDark.length; i++) {
+      console.log(i);
+      colorChangersToDark[i].classList.replace('bright', 'dark');
+    }
+    colorChangersToDark = document.getElementsByClassName('bright');
+    for (let i = 0; i < colorChangersToDark.length; i++) {
+      console.log(i);
+      colorChangersToDark[i].classList.replace('bright', 'dark');
+    }
+    return;
+  }
+
+}
+
+let birhtdayItem = document.getElementById('birhtdayItem');
+birhtdayItem.addEventListener('click', activateBirthdayMode);
+let birthdayAudio = new Audio('audio/tets.wav');
+
+function activateBirthdayMode() {
+  let spriteImage = document.getElementsByClassName('sprite-image')[0];
+  let mode = spriteImage.dataset.mode;
+  console.log(mode);
+  if ('default' === mode) {
+    spriteImage.style.backgroundImage = "url('images/spritesheetBirthday.png')";
+    spriteImage.dataset.mode = 'birthday';
+    birthdayAudio.play();
+  } else {
+    spriteImage.style.backgroundImage = "url('images/spritesheet.png')";
+    spriteImage.dataset.mode = 'default';
+    birthdayAudio.pause();
+    birthdayAudio.currentTime = 0;
+  }
 }
