@@ -6,7 +6,16 @@ let areaBlocker = document.getElementById('areaBlocker');
 
 let mainSprite = document.getElementById('sprite-container');
 mainSprite.addEventListener('click', function(){
-  
+
+  let maxX = 800;
+  let minX = 200;
+
+  let minY = 200;
+  let maxY = 800
+
+  let randValX = Math.floor(Math.random() * (maxX - minX + 1) + minX);
+  let randValY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
+  generateHeart(randValX, randValY, null, null, 1);
 });
 
 function stopAnimation() {
@@ -132,4 +141,58 @@ function unfade() {
       element.style.filter = 'alpha(opacity=' + op * 100 + ")";
       op += op * 0.1;
   }, 30);
+}
+
+//--------------------------------------------------------------------------
+
+var brd = document.createElement("DIV");
+document.body.insertBefore(brd, document.getElementById("board"));
+const duration = 3000;
+const speed = 0.5;
+const cursorXOffset = 0;
+const cursorYOffset = -5;
+var hearts = [];
+function generateHeart(x, y, xBound, xStart, scale)
+{
+   var heart = document.createElement("DIV");
+   heart.setAttribute('class', 'heart');
+   brd.appendChild(heart);
+   heart.time = duration;
+   heart.x = x;
+   heart.y = y;
+   heart.bound = xBound;
+   heart.direction = xStart;
+   heart.style.left = heart.x + "px";
+   heart.style.top = heart.y + "px";
+   heart.scale = scale;
+   heart.style.transform = "scale(" + scale + "," + scale + ")";
+   if(hearts == null)
+    hearts = [];
+   hearts.push(heart);
+   return heart;
+}
+
+var before = Date.now();
+var id = setInterval(frame, 5);
+function frame()
+{
+   var current = Date.now();
+   var deltaTime = current - before;
+   before = current;
+   for(i in hearts)
+   {
+    var heart = hearts[i];
+    heart.time -= deltaTime;
+    if(heart.time > 0)
+    {
+     heart.y -= speed;
+     heart.style.top = heart.y + "px";
+     heart.style.left = heart.x + heart.direction * heart.bound * Math.sin(heart.y * heart.scale / 30) + "px";
+    }
+    else
+    {
+     heart.parentNode.removeChild(heart);
+     hearts.splice(i, 1);
+    }
+   }
 }
