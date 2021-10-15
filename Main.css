@@ -107,6 +107,7 @@ body {
 
   #birhtdayItem {
     background: url(images/cake.png);
+    background-position: center;
   }
 
   .menuItemContent {
