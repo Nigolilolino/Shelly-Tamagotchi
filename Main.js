@@ -84,7 +84,7 @@ function changeColorTheme() {
 
 let birhtdayItem = document.getElementById('birhtdayItem');
 birhtdayItem.addEventListener('click', activateBirthdayMode);
-let birthdayAudio = new Audio('audio/tets.wav');
+let birthdayAudio = new Audio('audio/shellyBirthdaySong.wav');
 
 function activateBirthdayMode() {
   unfade();
