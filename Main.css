@@ -105,6 +105,10 @@ body {
     align-items: center;
   }
 
+  #birhtdayItem {
+    background: url(images/cake.png);
+  }
+
   .menuItemContent {
     font-size: 50pt;
   }
