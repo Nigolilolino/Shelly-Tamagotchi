@@ -9,6 +9,7 @@
 
 body {
   background: url("images/room1.jpg");
+  touch-action: manipulation;
 }
 
 .heart {
