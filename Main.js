@@ -2,6 +2,12 @@ var animationInterval;
 var spriteSheet = document.getElementById("sprite-image");
 var widthOfSpriteSheet = 2888;
 var widthOfEachSprite = 720;
+let areaBlocker = document.getElementById('areaBlocker');
+
+let mainSprite = document.getElementById('sprite-container');
+mainSprite.addEventListener('click', function(){
+  
+});
 
 function stopAnimation() {
   clearInterval(animationInterval);
@@ -72,17 +78,58 @@ birhtdayItem.addEventListener('click', activateBirthdayMode);
 let birthdayAudio = new Audio('audio/tets.wav');
 
 function activateBirthdayMode() {
+  unfade();
+
   let spriteImage = document.getElementsByClassName('sprite-image')[0];
+  let additionalContent = document.getElementById('additionalContent');
   let mode = spriteImage.dataset.mode;
   console.log(mode);
   if ('default' === mode) {
-    spriteImage.style.backgroundImage = "url('images/spritesheetBirthday.png')";
-    spriteImage.dataset.mode = 'birthday';
-    birthdayAudio.play();
+    setTimeout(function() { 
+      spriteImage.style.backgroundImage = "url('images/spritesheetBirthday.png')";
+      spriteImage.dataset.mode = 'birthday';
+      additionalContent.classList.add('microphone');
+      fade();
+     }, 1000);
+     setTimeout(function() { 
+      birthdayAudio.play();
+      }, 1500);
   } else {
-    spriteImage.style.backgroundImage = "url('images/spritesheet.png')";
-    spriteImage.dataset.mode = 'default';
-    birthdayAudio.pause();
-    birthdayAudio.currentTime = 0;
+    setTimeout(function() { 
+      spriteImage.style.backgroundImage = "url('images/spritesheet.png')";
+      spriteImage.dataset.mode = 'default';
+      additionalContent.classList.remove('microphone');
+      birthdayAudio.pause();
+      birthdayAudio.currentTime = 0;
+      fade();
+     }, 1000);
   }
+}
+
+function fade() {
+  let element = document.getElementById('areaBlocker');
+  var op = 1;  // initial opacity
+  var timer = setInterval(function () {
+      if (op <= 0.1){
+          clearInterval(timer);
+          element.style.display = 'none';
+      }
+      element.style.opacity = op;
+      element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+      op -= op * 0.2;
+  }, 50);
+}
+
+function unfade() {
+  let element = document.getElementById('areaBlocker');
+  var op = 0.1;  // initial opacity
+  element.style.display = 'block';
+  var timer = setInterval(function () {
+      if (op >= 1){
+          clearInterval(timer);
+      }
+      element.style.opacity = op;
+      element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+      op += op * 0.1;
+  }, 30);
 }
